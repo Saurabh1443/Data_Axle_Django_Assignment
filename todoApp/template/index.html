@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+    <title>ToDo App</title>
+  </head>
+  <body>
+    <!----Nav Bars -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
+          <a class="navbar-brand" style="margin-left: 20px;" href="/">All ToDo</a>
+          <div class="navbar "  id="navbarNav">
+            <ul  class="navbar-nav d-flex">
+              <li class="nav-item" >
+                <a class="nav-link active" aria-current="page" href="/logout/">Logout</a>
+              </li>
+            </ul>
+          </div>
+       
+      </nav>
+      <div style="margin-top: 5px;margin-left:8px; margin-right:8px">
+        <a href="/post/new/" style="border: 1px solid black; border-radius: 5px; background-color: blue; float:right;color:white;margin-bottom: 5px;" class="btn btn-default active" role="button"> + Create a Todo</a>
+        <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Todo Id</th>
+                <th scope="col">Title</th>
+                <th scope="col" colspan="3">Description</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">End Date</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {%for vv in data%}
+
+              <tr>
+                <th scope="row"># {{vv.id}}</th>
+                <td>{{vv.title}}</td>
+                <td colspan="3">{{vv.description}}</td>
+                <td >{{vv.start_date}}</td>
+                <td>{{vv.end_date}}</td>
+                <td class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="true">
+                    {{vv.is_completed}}
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    {% if vv.is_completed %}
+                    <li ><a class="dropdown-item" style="color:green" href={% url 'editTodoStatus' vv.id 0 %}>False</a></li>
+                    {%else%}
+                    <li><a style="color:Red" class="dropdown-item" href={% url 'editTodoStatus' vv.id 1 %}>True</a></li>
+                     {% endif %}
+                  </ul>
+                  </td>
+                <td>
+                  <a href= {% url 'editTodoList' vv.id  %} style=" border-radius: 5px; background-color: rgba(0, 255, 255, 0.343);color:red;" class="btn btn-default active" role="button"> Edit</a>
+                  <a href= {% url 'deleteTodoList' vv.id  %} style=" border-radius: 5px; background-color: rgba(255, 0, 0, 0.459);color:black;" class="btn btn-default active" role="button"> Delete</a>
+                </td>
+              </tr>
+              
+              {%endfor%}
+            </tbody>
+            
+          </table>
+      </div>
+         
+      
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    
+  </body>
+</html>
